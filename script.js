@@ -1,4 +1,4 @@
-function generateMatrix(matLength, gr, grEa, grEaea,amen,bom) {
+function generateMatrix(matLength, gr, grEa, grEaea, amen, bom, jur) {
     let matrix = [];
     for (let i = 0; i < matLength; i++) {
         matrix.push([])
@@ -43,12 +43,20 @@ function generateMatrix(matLength, gr, grEa, grEaea,amen,bom) {
         if (matrix[y][x] == 0) {
             matrix[x][y] = 5;
         }
+
+    }
+    for (let i = 0; i < jur; i++) {
+        let x = Math.floor(Math.random() * matLength);
+        let y = Math.floor(Math.random() * matLength);
+        if (matrix[y][x] == 0) {
+            matrix[x][y] = 6;
+        }
     }
     return matrix;
 }
 
 
-let matrix = generateMatrix(30, 50, 100, 20,50,10)
+matrix = generateMatrix(30, 10, 40, 20, 10, 10,10);
 
 
 var side = 120;
@@ -56,8 +64,9 @@ var side = 120;
 let grassArr = [];
 let grassEaterArr = [];
 let grassEatereatArr = [];
-let amenakerArr=[];
-let bombArr=[];
+let amenakerArr = [];
+let bombArr = [];
+let jurArr = [];
 
 function setup() {
     frameRate(5);
@@ -78,7 +87,7 @@ function setup() {
                 grassEatereatArr.push(grEateat)
 
             }
-            
+
 
             else if (matrix[y][x] == 4) {
                 let amen = new Amenaker(x, y);
@@ -92,7 +101,11 @@ function setup() {
                 bombArr.push(bom)
 
             }
-           
+            else if (matrix[y[x] == 6]) {
+                let jur = new Jur(x, y);
+                jurArr.push(jur)
+            }
+
         }
     }
 }
@@ -119,41 +132,44 @@ function draw() {
             else if (matrix[y][x] == 5) {
                 fill("orange");
             }
+            else if (matrix[y][x] == 6) {
+                fill("black")
+            }
 
-            rect(x * side, y * side, side, side,side);
+            rect(x * side, y * side, side, side, side);
 
 
         }
     }
 
     for (let i in grassArr) {
-   
+
 
         grassArr[i].mul()
-  
+
     }
 
     for (let i in grassEaterArr) {
         grassEaterArr[i].eat()
-       
+
     }
 
 
     for (let i in grassEatereatArr) {
         grassEatereatArr[i].eat()
-      
+
     }
 
 
     for (let i in amenakerArr) {
         amenakerArr[i].eat()
-   
+
     }
 
 
     for (let i in bombArr) {
         bombArr[i].explode()
-      
+
     }
 
 
